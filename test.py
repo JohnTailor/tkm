@@ -27,7 +27,7 @@ idocs,iToWord=algTools.processCorpus(docs) #Turn dataset with words into sequenc
 print "\nRunning TKM... - Takes 1 - 2 minutes"
 tkmc=TKMCore.TKMCore()
 #( mdocs,nWords, nTopics,winwid, alpha,beta, convconst=0.05, miter=500, mseed=int(time.time() % 10000),klDistThres=0.25):
-tkmc.run(idocs,len(iToWord),100,7,2.5,0.05)
-print "\nPrinting Results..."
-algTools.print_topics(tkmc.f_w_t,iToWord)
+tkmc.run(idocs,len(iToWord),20,7,2.5,0.05)
+print "\nPrinting Topics with Human Weights..."
+algTools.print_topics(tkmc.get_f_w_t_hu(),iToWord)
 
