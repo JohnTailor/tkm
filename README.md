@@ -10,7 +10,9 @@ Johannes Schneider, Michail Vlachos. Topic Modeling based on Keywords and Contex
 Usage:
 ------
 Install Cython
+
 Run "python setup.py build_ext --inplace" in the /TKM folder to compile Cython code, ie. "_topicAssign.c" and "_topicAssign.pyd" files will be created
+
 Run "python test.py"
 
 
