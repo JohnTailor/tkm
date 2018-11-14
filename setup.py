@@ -1,5 +1,5 @@
 #Author: Johannes Schneider, University of Liechtenstein
-#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (under submission as of 10/2017)
+#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
 
 #Install compiler aka.ms/vcpython #C:\Users\jschneid\AppData\Local\Programs\Common\Microsoft\Visual C++ for Python\9.0\ #VS90COMNTOOLS
 #Go to folder with lda.pyx ,eg.

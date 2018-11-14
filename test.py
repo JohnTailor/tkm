@@ -1,5 +1,5 @@
 #Author: Johannes Schneider, University of Liechtenstein
-#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (under submission as of 10/2017)
+#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
 
 
 import TKMCore
@@ -20,14 +20,14 @@ def readBrownDataset():
     return docs
 
 
-print "\nDownloading Testdataset using Python's NLTK library..."
+print("\nDownloading Testdataset using Python's NLTK library...")
 docs=readBrownDataset()
-print "\nPreprocessing Dataset..."
+print("\nPreprocessing Dataset...")
 idocs,iToWord=algTools.processCorpus(docs) #Turn dataset with words into sequence of numbers
-print "\nRunning TKM... - Takes 1 - 2 minutes"
+print("\nRunning TKM... - Takes 1 - 2 minutes")
 tkmc=TKMCore.TKMCore()
 #( mdocs,nWords, nTopics,winwid, alpha,beta, convconst=0.05, miter=500, mseed=int(time.time() % 10000),klDistThres=0.25):
 tkmc.run(idocs,len(iToWord),20,7,8,0.08)
-print "\nPrinting Topics with Human Weights..."
+print("\nPrinting Topics with Human Weights...")
 algTools.print_topics(tkmc.get_f_w_t_hu(),iToWord)
 

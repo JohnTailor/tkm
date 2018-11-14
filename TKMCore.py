@@ -1,5 +1,5 @@
 #Author: Johannes Schneider, University of Liechtenstein
-#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (under submission as of 10/2017)
+#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
 import random
 import time
 

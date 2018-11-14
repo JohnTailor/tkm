@@ -1,5 +1,5 @@
 #Author: Johannes Schneider, University of Liechtenstein
-#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (under submission as of 10/2017)
+#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
 import numpy as np
 import scipy
 from scipy import stats
@@ -18,7 +18,7 @@ import re
 
 rep = {".": " ", "!": " ","?":" ",")":" ","(":" ",",":" ",";":" ",":":" ","`":" ","'":" ", '"':" "} # define desired replacements here
 # use these three lines to do the replacement
-rep = dict((re.escape(k), v) for k, v in rep.iteritems())
+rep = dict((re.escape(k), v) for k, v in rep.items())
 pattern = re.compile("|".join(rep.keys()))
 
 
@@ -94,7 +94,7 @@ def processCorpus(corpus):
             if len(iToWordDict[w])>1: #remove words of length 1
                 wco[w]=wco.get(w,0)+1
 
-    wMoreOnce = set(range(len(iToWordDict))) - set([w for w,c in wco.iteritems() if c < 2]) #newMap = { w:i for i,w in enumerate(wMoreOnce)}
+    wMoreOnce = set(range(len(iToWordDict))) - set([w for w,c in wco.items() if c < 2]) #newMap = { w:i for i,w in enumerate(wMoreOnce)}
     newdocs = [[iToWordDict[w] for w in d if w in wMoreOnce]  for d in idocs] #remove unique words
     idocs, iToWordDict, wordToiDict = wordsToIndex(newdocs)
     return idocs,iToWordDict
@@ -122,7 +122,7 @@ def tokenDoc(doc, mapWord):
 
 
 def print_topics(p_w_t,iToWordDict):
-    print "\n Printing up to 50 topics with up to 15 words each...\n---------------------------------------\n"
+    print("\n Printing up to 50 topics with up to 15 words each...\n---------------------------------------\n")
     ntopics=len(p_w_t[0])
     nw=len(p_w_t)
     for t in range(min(ntopics,50)):
@@ -134,4 +134,4 @@ def print_topics(p_w_t,iToWordDict):
                 tstr += '%s %.3f, ' % (iToWordDict[wid], p*10)
             else:
                 tstr += '%s %.5f, ' % (iToWordDict[wid], p*10)
-        print tstr
+        print(tstr)
