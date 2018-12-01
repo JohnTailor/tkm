@@ -1,33 +1,47 @@
-#Author: Johannes Schneider, University of Liechtenstein
-#Paper: Topic modeling based on Keywords and Context, Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
+# Author: Johannes Schneider, University of Liechtenstein
+# Paper: Topic modeling based on Keywords and Context
+# Please cite: https://arxiv.org/abs/1710.02650 (accepted at SDM 2018)
 
+import re
+
+import nltk
+from nltk.corpus import brown
 
 import TKMCore
 import algTools
 
+
 def readBrownDataset():
-    import nltk
     nltk.download("brown")
-    from nltk.corpus import brown
     documents = brown.fileids()
-    docs=[]
-    import re
-    for fi in documents:
-            if len(brown.categories(fi)) ==1:
-                d= brown.raw(fi).replace("\n"," ")
-                d=re.sub(r"/[A-Za-z0-9_-]+ "," ",d)#	The/at Fulton/np-tl County/nn-tl Grand/jj-tl Jury/nn-tl said/vbd Friday/nr an/at investigation/nn") #.replace("/at","").replace("/nn-tl","").replace("/nn-hp","").replace("/np-hl","").replace("/nn","").replace("/vbd","").replace("/in","").replace("/jj","").replace("/hvz","").replace("/cs","").replace("/nps","").replace("/nr","").replace("/np-tl","").replace("/md","").replace("/np","").replace("/cd-hl","").replace("/vbn","").replace("/np-tl","").replace("/dti","").replace("--/--","")
-                docs.append(d)
+    docs = []
+    for doc in documents:
+        if len(brown.categories(doc)) == 1:
+            d = brown.raw(doc).replace("\n", " ")
+            d = re.sub(r"/[A-Za-z0-9_-]+ ", " ", d)  #The/at Fulton/np-tl County/nn-tl Grand/jj-tl Jury/nn-tl said/vbd Friday/nr an/at investigation/nn") #.replace("/at","").replace("/nn-tl","").replace("/nn-hp","").replace("/np-hl","").replace("/nn","").replace("/vbd","").replace("/in","").replace("/jj","").replace("/hvz","").replace("/cs","").replace("/nps","").replace("/nr","").replace("/np-tl","").replace("/md","").replace("/np","").replace("/cd-hl","").replace("/vbn","").replace("/np-tl","").replace("/dti","").replace("--/--","")
+            docs.append(d)
     return docs
 
 
-print("\nDownloading Testdataset using Python's NLTK library...")
-docs=readBrownDataset()
-print("\nPreprocessing Dataset...")
-idocs,iToWord=algTools.processCorpus(docs) #Turn dataset with words into sequence of numbers
+print("\nDownloading test data set using Python's NLTK library...")
+docs = readBrownDataset()
+print("\nPreprocessing data set...")
+# Transform data set with words into sequence of numbers
+m_docs, id2word = algTools.process_corpus(docs)
+
+print([id2word[_id] for _id in m_docs[0][:50]])
+print(["{}: {}".format(_id, word) for _id, word in id2word.items()][:10])
+
 print("\nRunning TKM... - Takes 1 - 2 minutes")
-tkmc=TKMCore.TKMCore()
-#( mdocs,nWords, nTopics,winwid, alpha,beta, convconst=0.05, miter=500, mseed=int(time.time() % 10000),klDistThres=0.25):
-tkmc.run(idocs,len(iToWord),20,7,8,0.08)
+tkmc = TKMCore.TKMCore(
+    m_docs=m_docs,
+    n_words=len(id2word),
+    n_topics=20,
+    winwid=7,
+    alpha=7,
+    beta=0.08
+)
+tkmc.run(convergence_constant=0.08, mseed=4848)
 print("\nPrinting Topics with Human Weights...")
-algTools.print_topics(tkmc.get_f_w_t_hu(),iToWord)
+algTools.print_topics(p_w_t=tkmc.get_f_w_t_hu(), id2word=id2word)
 
