@@ -13,12 +13,13 @@ import scipy
 from scipy import stats
 
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer, PorterStemmer
 
-from stemming.porter import stem
+#from stemming.porter import stem
 
 stemmMap = {'ADJ': 'a', 'ADJ_SAT': 'a', 'ADV': 'r', 'NOUN': 'n', 'VERB': 'v'}
-stemmer = WordNetLemmatizer()
+lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer()
 
 stopwords_eng = stopwords.words('english')
 stopwords_set = set(stopwords_eng)
@@ -168,7 +169,7 @@ def tokenize(doc):
     # remove stop words
     matches = [t for t in matches if t not in stopwords_set]
     # stem words
-    matches = [stem(t) for t in matches]
+    matches = [stemmer.stem(t) for t in matches]
     # remove stop words again, due to stemming this seems to happen...
     matches = [t for t in matches if t not in stopwords_set]
     return matches
